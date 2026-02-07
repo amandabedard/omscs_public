@@ -15,20 +15,23 @@ END_STATE = {
 }
 
     
-# Doing depth runs vs breadth since i already worked out that the paths
-# to the solution are the same lenght
-def run(state=START_STATE, previous_states=[], turn=1, response=[]):
-    transitions = generate(state)
-    states = test(state, transitions, previous_states)
-    previous_states.append(states)
-    response.append((turn, states))
-
-    # Break out of recursion
-    if END_STATE in states or states == []:
-        return response
-    else:
+def run(state=START_STATE):
+    previous_states = []
+    response = []
+    # Using a stack instead of recursion for my dfs
+    stack = [(state, 1)]
+    while stack:
+        current_state, turn = stack.pop()
+        transitions = generate(current_state)
+        states = test(current_state, transitions, previous_states)
+        previous_states.extend(states)
+        response.append((turn, states))
+        # We got our goal
+        if END_STATE in states or states == []:
+            return response
         for new_state in states:
-            run(new_state, previous_states, turn+1, response)
+            stack.append((new_state, turn + 1))
+    return response
 
 if __name__ == "__main__":
     res = run()
