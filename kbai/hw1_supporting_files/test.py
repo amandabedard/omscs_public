@@ -23,5 +23,9 @@ def _is_valid(state: dict) -> bool:
     frodo_with_gollum = state["gollum"] == state["frodo"]
 
     # check if frodo or gollum is alone with the ring
+    if frodo_with_ring and not frodo_with_gollum and not frodo_with_sam:
+        valid = False
+    if gollum_with_ring and not frodo_with_gollum and not gollum_with_sam:
+        valid = False
 
     return valid
