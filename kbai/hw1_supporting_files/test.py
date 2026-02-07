@@ -15,7 +15,7 @@ def test(initial_state:dict, transition_list:list[tuple], previous_states: list[
     # we know. They are:
     # 1. Gollum nor Frodo can be alone with the Ring
     all_states = _apply(initial_state, transition_list)
-    filtered_list = [valid_state for valid_state in all_states if _is_valid(valid_state)]
+    filtered_list = [valid_state for valid_state in all_states if _is_valid(valid_state, previous_states)]
     print(f"Found valid states: {filtered_list}")
     return filtered_list
 

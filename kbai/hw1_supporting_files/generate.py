@@ -10,7 +10,7 @@ example = {
 
 # The initial state generator. We are focused on only generating valid transition states, not
 # checking the results. That's for test.py
-def generate(initial_state:dict) -> tuple:
+def generate(initial_state:dict) -> list[tuple]:
     # Sam can always go by himself
     transition_states = [("sam",)]
     # The rules:
