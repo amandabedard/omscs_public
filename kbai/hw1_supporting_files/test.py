@@ -1,3 +1,4 @@
+import copy
 # We will take the initial state and a transition tuple to build the new state
 # and make sure it is not invalid
 def test(initial_state:dict, transition_list:list[tuple]) -> list[dict]:
@@ -9,7 +10,17 @@ def test(initial_state:dict, transition_list:list[tuple]) -> list[dict]:
 
 def _apply(initial_state:dict, transition_list:list[tuple]):
     # We will apply the transition to the state
-    return
+    transformed_states = []
+    for transition in transition_list:
+        new_state = copy.deepcopy(initial_state)
+        # Flipping the state for 0 
+        new_state[transition[0]] = not new_state[transition[0]]
+        if transition[1]:
+            # If it's not sam in the boat alone
+            new_state[transition[1]] = not new_state[transition[1]]
+        transformed_states.append(new_state)
+
+    return transformed_states
 
 def _is_valid(state: dict) -> bool:
     # Is this a valid state? We will go through conditions to determine
@@ -29,3 +40,6 @@ def _is_valid(state: dict) -> bool:
         valid = False
 
     return valid
+
+if __name__ == "__main__":
+    test()
