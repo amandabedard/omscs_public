@@ -37,3 +37,6 @@ def generate(initial_state:dict) -> tuple:
     
     print(f"Discovered the following transition states: {transition_states}")
     return transition_states
+
+if __name__ == "__main__":
+    generate(example)
