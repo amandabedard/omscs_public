@@ -1,11 +1,21 @@
 import copy
+
+example_initial = {
+    "frodo": False,
+    "ring": False,
+    "sam": False,
+    "gollum": False
+}
+example_transitions =  [('sam',), ('sam', 'ring'), ('sam', 'frodo'), ('sam', 'gollum')]
 # We will take the initial state and a transition tuple to build the new state
 # and make sure it is not invalid
 def test(initial_state:dict, transition_list:list[tuple]) -> list[dict]:
     # We will take the list of generated states and check them with the test function against the rules
     # we know. They are:
     # 1. Gollum nor Frodo can be alone with the Ring
-    filtered_list = []
+    all_states = _apply(initial_state, transition_list)
+    filtered_list = [valid_state for valid_state in all_states if _is_valid(valid_state)]
+    print(f"Found valid states: {filtered_list}")
     return filtered_list
 
 def _apply(initial_state:dict, transition_list:list[tuple]):
@@ -15,7 +25,7 @@ def _apply(initial_state:dict, transition_list:list[tuple]):
         new_state = copy.deepcopy(initial_state)
         # Flipping the state for 0 
         new_state[transition[0]] = not new_state[transition[0]]
-        if transition[1]:
+        if len(transition) > 1 and transition[1]:
             # If it's not sam in the boat alone
             new_state[transition[1]] = not new_state[transition[1]]
         transformed_states.append(new_state)
@@ -42,4 +52,4 @@ def _is_valid(state: dict) -> bool:
     return valid
 
 if __name__ == "__main__":
-    test()
+    test(example_initial, example_transitions)
