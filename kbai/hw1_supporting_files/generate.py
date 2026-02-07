@@ -2,15 +2,15 @@
 
 # Our state object. We can use this to test the generator
 example = {
-    "frodo": "LEFT",
-    "ring": "LEFT",
-    "sam": "LEFT",
-    "gollum": "LEFT"
-}
+    "frodo": False,
+    "ring": False,
+    "sam": False,
+    "gollum": False
+} # False is left, True is right.
 
 # The initial state generator. We are focused on only generating valid transition states, not
 # checking the results. That's for test.py
-def generate(initial_state:dict):
+def generate(initial_state:dict) -> tuple:
     transition_states = []
     # The rules:
     # 1. Sam must always flip sides (he steers the boat)
