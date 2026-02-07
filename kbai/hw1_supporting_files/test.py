@@ -14,4 +14,14 @@ def _apply(initial_state:dict, transition_list:list[tuple]):
 def _is_valid(state: dict) -> bool:
     # Is this a valid state? We will go through conditions to determine
     valid = True
+
+    # Writing out the conditions so i don't get confused
+    frodo_with_ring = state["frodo"] == state["ring"]
+    frodo_with_sam = state["frodo"] == state["sam"]
+    gollum_with_ring = state["gollum"] == state["ring"]
+    gollum_with_sam = state["gollum"] == state["sam"]
+    frodo_with_gollum = state["gollum"] == state["frodo"]
+
+    # check if frodo or gollum is alone with the ring
+
     return valid
