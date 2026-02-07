@@ -7,9 +7,10 @@ example_initial = {
     "gollum": False
 }
 example_transitions =  [('sam',), ('sam', 'ring'), ('sam', 'frodo'), ('sam', 'gollum')]
+previous_states = []
 # We will take the initial state and a transition tuple to build the new state
 # and make sure it is not invalid
-def test(initial_state:dict, transition_list:list[tuple]) -> list[dict]:
+def test(initial_state:dict, transition_list:list[tuple], previous_states: list[dict]) -> list[dict]:
     # We will take the list of generated states and check them with the test function against the rules
     # we know. They are:
     # 1. Gollum nor Frodo can be alone with the Ring
@@ -32,7 +33,7 @@ def _apply(initial_state:dict, transition_list:list[tuple]):
 
     return transformed_states
 
-def _is_valid(state: dict) -> bool:
+def _is_valid(state: dict, previous_states: list[dict]) -> bool:
     # Is this a valid state? We will go through conditions to determine
     valid = True
 
@@ -48,8 +49,11 @@ def _is_valid(state: dict) -> bool:
         valid = False
     if gollum_with_ring and not frodo_with_gollum and not gollum_with_sam:
         valid = False
+    if state in previous_states:
+        # This moves us further away from our goal since it has been traversed before.
+        valid = False
 
     return valid
 
 if __name__ == "__main__":
-    test(example_initial, example_transitions)
+    test(example_initial, example_transitions, previous_states)
